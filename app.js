@@ -12,6 +12,7 @@ const render = require("./lib/htmlRenderer");
 const Employee = require("./lib/Employee");
 
 var employees = [];
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -122,13 +123,21 @@ function newEmp() {
             newInt();
         }
         else {
-            var page;
-            page = render(employees);
+            createPage();
             console.log('Generating Page...')
-            console.log(employees);
+
         }
     });
 };
+
+function createPage() {
+    const page = render(employees);
+
+    fs.writeFile('main.html', page, 
+    (err) =>
+        err ? console.log(err) : console.log('Success!')
+    );
+}
 
 function init() {
     console.log("Input team members");
@@ -140,6 +149,7 @@ function init() {
     });
     
 }
+
 init();
 
 // After the user has input all employees desired, call the `render` function (required
